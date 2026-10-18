@@ -3,17 +3,47 @@
 NixOS-конфигурация в виде флейка. Сейчас описан один хост — `katana-laptop`, но структура
 рассчитана на несколько машин (планируются сервер и второй ноутбук).
 
+## Первый запуск на новой машине
+
+`hosts/<хост>/hardware-configuration.nix` намеренно не хранится в репозитории: в нём
+зашиты UUID разделов, которые меняются при каждой переустановке. Без этого файла флейк
+не вычисляется, поэтому его нужно сгенерировать до первой сборки:
+
+```sh
+sudo nixos-generate-config --no-filesystems --dir /tmp/hw
+sudo nixos-generate-config --show-hardware-config > hosts/katana-laptop/hardware-configuration.nix
+```
+
+На живой системе достаточно второй команды. При установке с live-образа — после
+монтирования целевых разделов:
+
+```sh
+sudo nixos-generate-config --root /mnt
+cp /mnt/etc/nixos/hardware-configuration.nix hosts/katana-laptop/hardware-configuration.nix
+```
+
+Пароль пользователя тоже не описан в конфиге, поэтому на свежей установке его нужно
+задать до первой перезагрузки, иначе войти через `ly` не получится:
+
+```sh
+sudo nixos-enter --root /mnt -c 'passwd pitt0n'
+```
+
 ## Как применять
 
 ```sh
-sudo nixos-rebuild switch --flake ~/my-configuration#katana-laptop
+sudo nixos-rebuild switch --flake path:/home/pitt0n/my-configuration#katana-laptop
 ```
 
 Проверить сборку без переключения системы:
 
 ```sh
-sudo nixos-rebuild build --flake ~/my-configuration#katana-laptop
+sudo nixos-rebuild build --flake path:/home/pitt0n/my-configuration#katana-laptop
 ```
+
+Префикс `path:` обязателен: `hardware-configuration.nix` не лежит в git, а обычная
+форма `--flake ~/my-configuration` копирует в стор только отслеживаемые git'ом файлы
+и падает с `error: path ... does not exist`. `path:` берёт каталог как есть.
 
 Обновить версии из `flake.lock`:
 
