@@ -3,6 +3,9 @@
 {
   nixpkgs.config.allowUnfree = true;
 
+  # RTX 4060 Laptop. Без этого CUDA собирается под все архитектуры сразу.
+  nixpkgs.config.cudaCapabilities = [ "8.9" ];
+
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -34,7 +37,8 @@
     ranger
     claude-code
     opencode
-    llama-cpp
+    # CUDA unfree и не лежит в бинарном кеше — собирается локально.
+    (llama-cpp.override { cudaSupport = true; })
     krabby
 
     nemo-with-extensions
