@@ -13,6 +13,8 @@
     curl
     htop
     btop
+    ncdu
+    duf
     fastfetch
 
     firefox
@@ -27,6 +29,8 @@
     jdk
     (python3.withPackages (ps: with ps; [ pip ]))
     vscode
+    # В 26.05 собран на Electron 41, помеченном insecure (EOL).
+    unstable.opencode-desktop
     unstable.antigravity-cli # бинарь называется agy
     neovim
     jetbrains.idea
@@ -36,7 +40,6 @@
     kitty
     ranger
     claude-code
-    opencode
     # CUDA unfree и не лежит в бинарном кеше — собирается локально.
     (llama-cpp.override { cudaSupport = true; })
     krabby
