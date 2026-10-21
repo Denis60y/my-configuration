@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -24,6 +24,7 @@
     jdk
     (python3.withPackages (ps: with ps; [ pip ]))
     vscode
+    unstable.antigravity-cli # бинарь называется agy
     neovim
     jetbrains.idea
     jetbrains.pycharm
