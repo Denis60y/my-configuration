@@ -33,6 +33,8 @@
     kitty
     ranger
     claude-code
+    opencode
+    llama-cpp
     krabby
 
     nemo-with-extensions
