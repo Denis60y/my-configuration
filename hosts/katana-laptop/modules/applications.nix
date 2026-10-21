@@ -18,8 +18,8 @@
     duf
     fastfetch
 
-    firefox
-    telegram-desktop
+    unstable.firefox
+    unstable.telegram-desktop
     libreoffice
     tor-browser
     discord
@@ -29,18 +29,18 @@
     kotlin
     jdk
     (python3.withPackages (ps: with ps; [ pip ]))
-    vscode
+    unstable.vscode
     # В 26.05 собран на Electron 41, помеченном insecure (EOL).
     unstable.opencode-desktop
     unstable.antigravity-cli # бинарь называется agy
     neovim
-    jetbrains.idea
-    jetbrains.pycharm
-    android-studio
+    unstable.jetbrains.idea
+    unstable.jetbrains.pycharm
+    unstable.android-studio
 
     kitty
     ranger
-    claude-code
+    unstable.claude-code
     # CUDA unfree и не лежит в бинарном кеше — собирается локально.
     (llama-cpp.override { cudaSupport = true; })
     krabby
