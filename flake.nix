@@ -17,6 +17,9 @@
         unstable = import nixpkgs-unstable {
           system = "x86_64-linux";
           config.allowUnfree = true;
+          # cudaCapabilities из applications.nix действует только на pkgs,
+          # этому набору его нужно задать отдельно. RTX 4060 Laptop.
+          config.cudaCapabilities = [ "8.9" ];
         };
       };
       modules = [
