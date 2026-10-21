@@ -5,6 +5,10 @@
 
   networking.networkmanager.enable = true;
 
+  # Загрузчик для готовых бинарников, собранных под обычные дистрибутивы
+  # (например, те, что приносят с собой расширения VS Code).
+  programs.nix-ld.enable = true;
+
   programs.fish = {
     enable = true;
 
