@@ -10,6 +10,7 @@
     vim
     wget
     git
+    gh
     curl
     htop
     btop
