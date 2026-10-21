@@ -5,9 +5,9 @@ NixOS-конфигурация в виде флейка. Сейчас описа
 
 ## Первый запуск на новой машине
 
-`hosts/<хост>/hardware-configuration.nix` намеренно не хранится в репозитории: в нём
-зашиты UUID разделов, которые меняются при каждой переустановке. Без этого файла флейк
-не вычисляется, поэтому его нужно сгенерировать до первой сборки:
+`hosts/<хост>/hardware-configuration.nix` хранится в репозитории, но в нём зашиты UUID
+разделов конкретной машины. Для нового хоста файл нужно сгенерировать заново до первой
+сборки — без него флейк не вычисляется:
 
 ```sh
 sudo nixos-generate-config --no-filesystems --dir /tmp/hw
@@ -32,18 +32,17 @@ sudo nixos-enter --root /mnt -c 'passwd pitt0n'
 ## Как применять
 
 ```sh
-sudo nixos-rebuild switch --flake path:/home/pitt0n/my-configuration#katana-laptop
+sudo nixos-rebuild switch --flake /home/pitt0n/my-configuration#katana-laptop
 ```
 
 Проверить сборку без переключения системы:
 
 ```sh
-sudo nixos-rebuild build --flake path:/home/pitt0n/my-configuration#katana-laptop
+sudo nixos-rebuild build --flake /home/pitt0n/my-configuration#katana-laptop
 ```
 
-Префикс `path:` обязателен: `hardware-configuration.nix` не лежит в git, а обычная
-форма `--flake ~/my-configuration` копирует в стор только отслеживаемые git'ом файлы
-и падает с `error: path ... does not exist`. `path:` берёт каталог как есть.
+Новые файлы нужно добавить в git (`git add`) до сборки: флейк копирует в стор только
+отслеживаемые git'ом файлы, иначе будет `error: path ... does not exist`.
 
 Обновить версии из `flake.lock`:
 

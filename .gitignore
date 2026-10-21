@@ -4,6 +4,3 @@ result-*
 
 # local-only Claude Code permissions
 .claude/settings.local.json
-
-# machine-specific: UUIDs change on every reinstall, generate per machine
-hosts/*/hardware-configuration.nix
